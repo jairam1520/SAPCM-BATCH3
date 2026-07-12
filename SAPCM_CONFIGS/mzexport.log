@@ -1,24 +1,8 @@
 --------------------------------------------------
-Commit and push failed, will try to merge.
-Get latest from Repository
---------------------------------------------------
-Automatically importing configurations
-This export was done 2026-07-12 19:45:13
-at host saps4hana by sapcmuser14@DR.
-Import started at 2026-07-12 19:48:22
-Input source is SAPCM_CONFIGS
---------------------------------------------------
-[Configuration/Ultra Format] - Importing SAPCM-BATCH3_SFTP.UFL_SFTP.
-[Configuration/Ultra Format] - User sapcmuser14 does not exist, using mzadmin.
---------------------------------------------------
-Revalidating affected configurations
---------------------------------------------------
-Import finished with errors at 2026-07-12 19:48:25
-Export started at 2026-07-12 19:52:13
+Commit and pushed the export to remote repository.
+Export started at 2026-07-12 19:53:34
 Output target is (SAPCM-BATCH3 / main) /SAPCM_CONFIGS
 --------------------------------------------------
 [Configuration/SAPCM-BATCH3_SFTP/Ultra Format] - Exporting SAPCM-BATCH3_SFTP.UFL_SFTP
 --------------------------------------------------
-[System/Access Group] - Exporting ZSAP_CM_ALL
---------------------------------------------------
-Export finished at 2026-07-12 19:52:13
+Export finished at 2026-07-12 19:53:34
