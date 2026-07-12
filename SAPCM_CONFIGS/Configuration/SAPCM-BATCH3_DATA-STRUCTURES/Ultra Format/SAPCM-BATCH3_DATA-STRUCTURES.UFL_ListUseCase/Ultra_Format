@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<exportmultiplex category="Ultra_Format" ref_path="ultra_format[Internal]/storable[ultra_format]/storable[Data]">
+   <string name="Definition"><![CDATA[/*
+EVT1001|9876543210|MUMBAI|VOICE,DATA,SMS,OTT|VOICE,DATA|2026-05-20 10:15:20
+EVT1002|9123456780|DELHI|VOICE,SMS|VOICE,INTL|2026-05-20 11:40:10
+EVT1003|9988776655|PUNE|VOICE,DATA,ROAMING,OTT|ROAMING,DATA|2026-05-20 12:05:55
+EVT1004|9000011111|BANGALORE|DATA,OTT|OTT,GAMING|2026-05-20 14:22:30
+EVT1005|8888888888|CHENNAI|VOICE,SMS,DATA|SMS|2026-05-20 16:45:05
+*/
+
+external EventDetailsExt{
+	ascii evtId : terminated_by("|");
+	ascii msisdn : terminated_by("|"); 
+	ascii circle : terminated_by("|");
+	ascii subsService : terminated_by("|");//VOICE,DATA,SMS,OTT
+	ascii usedService : terminated_by("|");//VOICE,DATA
+	ascii consDate : terminated_by("\n");
+};
+
+internal EventInt {
+	list<string> liSubsService;
+	list<string> liUsedService;
+};
+
+in_map e_inmap : external(EventDetailsExt),target_internal(EventDetailsTI),internal(EventInt){automatic;};
+decoder evtDec : in_map(e_inmap);
+
+internal ServiceOut{
+	string eventId;
+	string msisdn;
+	string circle;
+	int subscribedServiceCount;
+    int usedServiceCount;
+    list<string> unauthorizedServices;
+    list<string> billableServices;
+    string validationStatus;
+};]]></string>
+</exportmultiplex>

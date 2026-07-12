@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<exportmultiplex category="Ultra_Format" ref_path="ultra_format[Internal]/storable[ultra_format]/storable[Data]">
+   <string name="Definition"><![CDATA[/*
+A:BP01,02-02-2025 -->Activation
+U:BP01,02-02-2025,13 --> Usage
+U:BP01,03-02-2025,16 --> Usage
+T:BP01,04-02-2026 --> Termination
+*/
+
+external ActExt {
+    //ascii recType : terminated_by(":"),external_only;    
+    ascii bp: terminated_by(",");    
+    ascii actDate: terminated_by("\n");    
+};
+
+external UsgExt{
+    //ascii recType : terminated_by(":"),external_only;    
+    ascii bp: terminated_by(",");    
+    ascii usgDate: terminated_by(",");
+    ascii usg: terminated_by("\n");    
+};
+
+external TerExt {
+    //ascii recType : terminated_by(":"),external_only;    
+    ascii bp: terminated_by(",");    
+    ascii terDate: terminated_by("\n");    
+};
+
+in_map a_Inmap : external(ActExt),target_internal(ActTI){automatic;};
+in_map u_Inmap : external(UsgExt),target_internal(UsgTI){automatic;};
+in_map t_Inmap : external(TerExt),target_internal(TerTI){automatic;};
+
+decoder aDec : in_map(a_Inmap);
+decoder uDec : in_map(u_Inmap);
+decoder tDec : in_map(t_Inmap);
+
+decoder totalDec {
+   decoder aDec; 
+   decoder uDec *;
+   decoder  tDec;
+};
+]]></string>
+</exportmultiplex>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<exportmultiplex category="Ultra_Format" ref_path="ultra_format[Internal]/storable[ultra_format]/storable[Data]">
+   <string name="Definition"><![CDATA[
+internal NexRU{
+	string Tower_Type;
+	string Sub_Category;
+	string Service_Name;
+	string Resource_ID;
+	string Owner_ID;
+	string Company_Code;
+	string Qty;
+	string UOM;
+	string WBS_Code;
+	string Period;
+	string Detail_Alpha;
+	string Detail_Beta;
+	string Detail_Gamma;
+	string Volume_Type;
+    long seqNum : optional;
+};
+
+internal Transaction{
+    string  txnId   ;
+    long  SeqNum;
+};]]></string>
+</exportmultiplex>

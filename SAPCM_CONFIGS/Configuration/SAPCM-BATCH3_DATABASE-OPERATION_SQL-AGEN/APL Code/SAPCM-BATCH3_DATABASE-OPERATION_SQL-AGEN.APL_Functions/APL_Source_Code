@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<exportmultiplex category="APL_Source_Code" ref_path="apl_script[Internal]/storable[apl_script]/storable[Data]">
+   <string name="Definition"><![CDATA[import ultra.SAPCM-BATCH3_DATABASE-OPERATION_SQL-AGEN.UFL_EUC;
+import apl.SAPCM-BATCH3_DATABASE-OPERATION.APL_Constants;
+
+
+void loadConstants(){
+  tbEucRaw = tableCreate(PRF_DB,"SELECT * FROM SAPCMUSER14.TB_EUC_RAW");
+  billingPeriod = (string)tableGet(tbEucRaw,0,"BILLINGPERIOD");
+}
+string getBillingPeriod(string filename){
+    //EndUserCompute_202606.csv
+    list<string> liFile = strSplit(filename,"_");
+    string sDate = listGet(liFile,1);//202606.csv
+    sDate = strREReplaceAll(sDate,"[^0-9]","");
+    return sDate;
+}
+
+boolean isServerAlreadyCompenseted(EUC_Raw euc){
+    table tb = tableLookup(tbEucRaw,"SERVICELINE","!=","CLOUD","SERVERNAME","=",euc.ServerName);
+    if(tb != null && tableRowCount(tb)>0){
+        return true;    
+    }
+    return false;
+}
+
+
+string getSubservice(EUC_Raw euc){
+    table tb = sqlPrepSelect(SELECT_SUBSERVICE_QUERY,euc.ServiceLine,euc.ServerName,PRF_DB);
+    string sub;
+    if(tb != null && tableRowCount(tb)>0){
+    sub =  (string)tableGet(tb,0,"subservice");
+    }
+    return sub;
+}
+
+void mapFilterUdr(FilterNotif fil,EUC_Raw euc){
+    fil.ResourceId = euc.ResourceId;
+    fil.ServerName = euc.ServerName;
+    fil.ServerOnboardedDate = euc.ServerOnboardedDate;
+    fil.ServerStatus = euc.ServerStatus;
+    fil.ServiceLine = euc.ServiceLine;
+    fil.UnitConsumed = euc.UnitConsumed;
+}
+
+void loadToFilterTable(FilterNotif fil){
+    sqlPrepUpdate(INSERT_EUC_FILTERED,fil.ServiceLine,fil.ResourceId,fil.ServerName,fil.UnitConsumed,fil.ServerStatus,fil.ServerOnboardedDate,fil.txn_id,fil.errorCode,fil.errorDesc,PRF_DB);
+}]]></string>
+</exportmultiplex>

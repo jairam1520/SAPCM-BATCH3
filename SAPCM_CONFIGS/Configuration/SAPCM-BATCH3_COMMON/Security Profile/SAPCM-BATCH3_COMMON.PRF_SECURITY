@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<securityprofile category="Internal">
+   <storable name="securityprofile" storable-id="dr.Configuration" ver="10.1">
+      <array classname="java.lang.String" name="Access Groups -read -write -execute" size="3">
+         <string name="0" value="ZSAP_CM_ALL"/>
+         <string name="1" value="ZSAP_CM_ALL"/>
+         <string name="2" value="ZSAP_CM_ALL"/>
+      </array>
+      <storable name="Auxiliary Data" null="true"/>
+      <storable name="Data" storable-id="dr.SecurityProfileData" ver="20.0">
+         <map classname="java.util.HashMap" name="ExtRef Map" size="0"/>
+         <string name="ExtRef Profile" null="true"/>
+         <float name="ExtRef Version" value="1.0"/>
+         <storable name="TlsData" storable-id="dr.TLSData" ver="10.0">
+            <array classname="java.lang.String" name="EnabledProtocols" size="1">
+               <string name="0" value="TLSv1.3"/>
+            </array>
+            <string name="Forbidden" value=""/>
+            <boolean name="IncludeAllSupported" value="false"/>
+            <boolean name="IsEnabled" value="false"/>
+            <string name="Protocol" value="TLSv1.3"/>
+            <string name="Required" value=""/>
+         </storable>
+         <storable classname="com.digitalroute.security.azurekeyvault.AzureKeyVaultData" name="VaultData" ver="1.0">
+            <string name="Alias" value="sapcm-cert"/>
+            <storable name="AzureProfile" storable-id="dr.DRConfiguration" ver="2.0">
+               <set name="Dynamic Parameters" null="true"/>
+               <string name="Folder" value="SAPCM-BATCH3_COMMON"/>
+               <string name="Key" value="DR1782632099632"/>
+               <string name="Name" value="PRF_AzureKeyVault"/>
+               <string name="Type" value="Azure KeyVault Profile"/>
+            </storable>
+         </storable>
+         <storable classname="com.digitalroute.security.azurekeyvault.storable.AzureKeyStoreData" name="KeyStoreData" ver="1.0"/>
+         <storable classname="com.digitalroute.security.profile.storable.VaultTrustStoreAsVaultKeyStore" name="TrustStoreData" ver="10.1"/>
+      </storable>
+      <set name="Dynamic Parameters" null="true"/>
+      <string name="Folder" value="SAPCM-BATCH3_COMMON"/>
+      <boolean name="Is Dirty" value="false"/>
+      <boolean name="Is Dry Run" value="false"/>
+      <boolean name="Is Encrypted" value="false"/>
+      <boolean name="Is Locked" value="false"/>
+      <boolean name="Is Valid" value="true"/>
+      <string name="Key" value="DR1782632231704"/>
+      <string name="Modified By" value="sapcmuser14"/>
+      <long name="Modified Date" value="1782632231704"/>
+      <string name="Name" value="PRF_SECURITY"/>
+      <string name="Owner" value="sapcmuser14"/>
+      <string name="Type" value="Security Profile"/>
+      <int name="Version" value="1"/>
+      <string name="documentation" value=""/>
+   </storable>
+</securityprofile>

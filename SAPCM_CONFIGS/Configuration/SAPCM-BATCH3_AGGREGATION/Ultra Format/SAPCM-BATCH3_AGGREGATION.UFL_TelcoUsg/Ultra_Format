@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<exportmultiplex category="Ultra_Format" ref_path="ultra_format[Internal]/storable[ultra_format]/storable[Data]">
+   <string name="Definition"><![CDATA[internal telcoUsg{
+    string subscriber_id;
+    string service_type;
+    long consumption;
+};
+
+session sessionTelco{
+    telcoUsg rec;
+};
+
+internal telcoUsage2{
+    string subsId;
+    string msisdn;
+    string serviceType;
+    long consumption;   
+};
+
+session sessionTelco2{
+    telcoUsage2 rec;
+};
+
+internal Netstream{
+	string Record_ID;
+	string Customer_ID;
+	string Subscription_ID;
+	string Service_Type;
+	string Plan_Type;
+	string Product_Code;
+	string Usage_Date;
+	string Billing_Period;
+	string Usage_Units;
+	string Unit_Price;
+	string Total_Amount;
+	string Currency;
+	string Status;
+	string Region;
+	string Session_ID;
+};
+
+session sessionNetstream{
+    boolean isUnique;
+    string sessionId;    
+};]]></string>
+</exportmultiplex>

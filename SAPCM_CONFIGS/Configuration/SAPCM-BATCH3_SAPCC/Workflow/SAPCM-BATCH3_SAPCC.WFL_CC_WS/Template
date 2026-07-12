@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<exportmultiplex category="Template" ref_path="workflow_data[Internal]/storable[workflow_data]/storable[Data]">
+   <list classname="java.util.ArrayList" name="Comments"/>
+   <storable name="Execution Config" storable-id="dr.WorkflowExecutionConfig" ver="10.0">
+      <enum name="debugType" storable-id="dr.DebugType" value="EVENT"/>
+      <storable name="executionSettings" storable-id="dr.ExecutionSettings" ver="11.0">
+         <boolean name="enabled" value="false"/>
+         <storable name="kafka" null="true"/>
+      </storable>
+      <int name="noOfFilesToKeep" value="0"/>
+      <string name="throughputMIM" null="true"/>
+      <string name="txnHandler" value="Default Handler"/>
+   </storable>
+   <list classname="java.util.ArrayList" name="Field Types"/>
+   <list classname="java.util.ArrayList" name="Logged error MIM"/>
+   <list classname="java.util.ArrayList" name="Nodes">
+      <storable name="0" storable-id="dr.WfNode" ver="2.0">
+         <string name="Classname"><![CDATA[com.digitalroute.mz.pulse.agent.PulseCollectorAgentInspRT]]></string>
+         <array classname="com.digitalroute.wf.WfNodeConfig" name="Configuration" size="1">
+            <storable name="0" storable-id="dr.WfNodeConfig" ver="1.0">
+               <string name="Classname"><![CDATA[com.digitalroute.mz.pulse.agent.PulseCollectorAgentInspRT]]></string>
+               <storable name="Data" storable-id="dr.PulseData" ver="10.0">
+                  <double name="center" value="1.0"/>
+                  <string name="data" value=""/>
+                  <boolean name="dataEntered" value="true"/>
+                  <boolean name="dataRandomData" value="false"/>
+                  <boolean name="dataRandomOrderSeq" value="false"/>
+                  <int name="dataRangeEnd" value="10"/>
+                  <int name="dataRangeStart" value="0"/>
+                  <boolean name="dataSequentialOrder" value="true"/>
+                  <boolean name="dataSequentialRange" value="false"/>
+                  <int name="dataSize" value="1"/>
+                  <enum name="dataUnit" storable-id="dr.PulseDataSizeUnit" value="Bytes"/>
+                  <long name="intervalFixed" value="1"/>
+                  <string name="intervalType" value="Fixed"/>
+                  <double name="poissonRate" value="1.0"/>
+                  <long name="rate" value="1"/>
+                  <long name="start" value="1"/>
+                  <long name="stop" value="10"/>
+                  <enum name="unit" storable-id="dr.PulseTimeUnit" value="MINUTES"/>
+                  <double name="width" value="1.0"/>
+               </storable>
+            </storable>
+         </array>
+         <string name="Name" value="Pulse_1"/>
+      </storable>
+      <storable name="1" storable-id="dr.WfNode" ver="2.0">
+         <string name="Classname" value="com.digitalroute.wfc.analysis.AnalysisRealtimeInsp"/>
+         <array classname="com.digitalroute.wf.WfNodeConfig" name="Configuration" size="1">
+            <storable name="0" storable-id="dr.WfNodeConfig" ver="1.0">
+               <string name="Classname" value="com.digitalroute.wfc.analysis.AnalysisRealtimeInsp"/>
+               <storable name="Data" storable-id="dr.StuffyMapperData" ver="10.0">
+                  <string name="sourceCode"><![CDATA[import ultra.ws.Default.PRF_CC_WS_CHG.cycles;
+import ultra.ws.Default.PRF_CC_WS_CHG.schema;
+consume {
+    if(instanceOf(input,PulseUDR)){
+    WSCycle_chargeableItemCharge ws = udrCreate(WSCycle_chargeableItemCharge);
+    ChargeableItemChargeRequest param = udrCreate(ChargeableItemChargeRequest);
+    ws.param = param;
+    ChargeableItem chargeableItem = udrCreate(ChargeableItem);
+    param.chargeableItem = chargeableItem; 
+    chargeableItem.consumptionDate = dateCreateNow();
+    chargeableItem.name = "ZAPI";
+    chargeableItem.serviceId = "USGTYPE";
+    chargeableItem.userTechnicalId = "BP_101_P0000001";
+    chargeableItem.userProperties = udrCreate(ChargeableItemUserProperties);
+    chargeableItem.userProperties.property = listCreate(ChargeableItemProperty);
+    ChargeableItemProperty p1 = udrCreate(ChargeableItemProperty);
+    p1.name = "ZZQUANTITY";
+    p1.numberValue = 120;
+    ChargeableItemProperty p2 = udrCreate(ChargeableItemProperty);
+    p2.name = "GPART";
+    p2.stringValue = "BP_101";
+    ChargeableItemProperty p3 = udrCreate(ChargeableItemProperty);
+    p3.name = "ZZSERVICE";
+    p3.stringValue = "ZAPI_USG";
+    listAdd(chargeableItem.userProperties.property,p1);
+    listAdd(chargeableItem.userProperties.property,p2);
+    listAdd(chargeableItem.userProperties.property,p3);
+    debug("Request:"+ws);
+    udrRoute(ws);
+    }else{
+        
+        debug("Response:"+input);    
+    }
+}]]></string>
+                  <array classname="com.digitalroute.devkit.drudr.DRTypeInfo" name="udrTypes" size="2">
+                     <storable name="0" storable-id="dr.DRTypeInfo" ver="1.0">
+                        <string name="TypeName" value="PulseUDR"/>
+                     </storable>
+                     <storable name="1" storable-id="dr.DRTypeInfo" ver="1.0">
+                        <string name="TypeName" value="ws.SoapXMLTrace"/>
+                     </storable>
+                  </array>
+               </storable>
+            </storable>
+         </array>
+         <string name="Name" value="Analysis_1"/>
+      </storable>
+      <storable name="2" storable-id="dr.WfNode" ver="2.0">
+         <string name="Classname" value="com.digitalroute.wfc.ws.WSForwarderInsp"/>
+         <array classname="com.digitalroute.wf.WfNodeConfig" name="Configuration" size="1">
+            <storable name="0" storable-id="dr.WfNodeConfig" ver="1.0">
+               <string name="Classname" value="com.digitalroute.wfc.ws.WSForwarderInsp"/>
+               <storable name="Data" storable-id="dr.WSForwarderData" ver="11.0">
+                  <boolean name="cdataSupport" value="false"/>
+                  <boolean name="enableBasicAuthentication" value="true"/>
+                  <boolean name="enableRouteRawXML" value="true"/>
+                  <string name="httpAddress"><![CDATA[http://s4cc2023.expertsoft.in:9180/v1/chargeableItemCharging]]></string>
+                  <password name="httpPassword" value="DR-4-186C9689882121BE8349555738FAD95C"/>
+                  <string name="httpUsername" value="CC_CM_USER1"/>
+                  <storable name="profile" storable-id="dr.DRConfiguration" ver="2.0">
+                     <set name="Dynamic Parameters" null="true"/>
+                     <string name="Folder" value="Default"/>
+                     <string name="Key" value="DR1783621469258"/>
+                     <string name="Name" value="PRF_CC_WS_CHG"/>
+                     <string name="Type" value="WS Profile"/>
+                  </storable>
+                  <string name="routeRawXMLTo" value="r_3"/>
+                  <int name="serverTimeout" value="3000"/>
+               </storable>
+            </storable>
+         </array>
+         <string name="Name" value="Web_Service_Request_1"/>
+      </storable>
+   </list>
+   <storable name="Persistent" storable-id="dr.WorkflowPersistentConfig" ver="10.0">
+      <string name="persistentInspector" null="true"/>
+      <storable name="persistentStorageConfig" null="true"/>
+      <string name="persistentTimeoutHandler" null="true"/>
+   </storable>
+   <list classname="java.util.ArrayList" name="Routes">
+      <storable name="0" storable-id="dr.WfRoute" ver="2.0">
+         <string name="Name" value="r_1"/>
+         <int name="Realtime mode" value="0"/>
+      </storable>
+      <storable name="1" storable-id="dr.WfRoute" ver="2.0">
+         <string name="Name" value="r_3"/>
+         <int name="Realtime mode" value="0"/>
+      </storable>
+      <storable name="2" storable-id="dr.WfRoute" ver="2.0">
+         <string name="Name" value="r_4"/>
+         <int name="Realtime mode" value="0"/>
+      </storable>
+   </list>
+   <list classname="java.util.ArrayList" name="Service"/>
+   <boolean name="Template Valid" value="true"/>
+   <storable name="Thread data" storable-id="dr.WorkflowExecutionRealtimeConfig" ver="10.0">
+      <int name="countInterval" value="1"/>
+      <int name="queueSize" value="1000"/>
+      <string name="queueStrategy" null="true"/>
+      <string name="queueWorkerStrategy" null="true"/>
+      <boolean name="standalone" value="false"/>
+      <int name="threads" value="8"/>
+   </storable>
+</exportmultiplex>

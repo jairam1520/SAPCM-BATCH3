@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<exportmultiplex category="APL_Source_Code" ref_path="apl_script[Internal]/storable[apl_script]/storable[Data]">
+   <string name="Definition"><![CDATA[import ultra.SAPCM-BATCH3_APL-FUNDAMENTALS.UFL_USAGE;
+
+
+//check if the UsageInt record is valid or not
+boolean isUsageRecValid(UsageInt usage){
+    if(usage.callType != null && usage.callType != "" 
+    && usage.cellId != null && usage.cellId != ""
+    && usage.duration != null && usage.duration != ""
+    && usage.eventTime != null && usage.eventTime != ""
+    && usage.msisdn != null && usage.msisdn != ""
+    
+    ){
+       //valid record
+       
+        return true; 
+    }else{
+        return false;    
+    }
+    
+}
+
+//populates event type from UsageInt to UsageOut
+void populateEventType(UsageOut usgOut,UsageInt usage){
+    /*
+    VOICE --> VOICE_CALL
+    SMS --> SMS
+    DATA --> DATA_SESSION
+    */
+    /*if(usage.eventType == "VOICE"){
+        usgOut.serviceType = "VOICE_CALL";
+    }else if(usage.eventType == "SMS"){
+        usgOut.serviceType = "SMS";
+    }else if(usage.eventType == "DATA"){
+        usgOut.serviceType = "DATA_SESSION";
+    }   */  
+    
+    switch(usage.eventType){
+        case "VOICE"  {
+            usgOut.serviceType = "VOICE_CALL";    
+        } 
+        case "SMS"  {
+            usgOut.serviceType = "SMS";    
+        } 
+        case "DATA"  {
+            usgOut.serviceType = "DATA_SESSION";    
+        } 
+    }
+}
+
+void populateZone(UsageOut usgOut,UsageInt usage){
+   string cellId = usage.cellId;
+   
+   /*if(strStartsWith(cellId, "mum")){
+      usgOut.zone = "MUMBAI"; 
+   }else if(strStartsWith(cellId, "del")){
+      usgOut.zone = "DELHI"; 
+   }  
+   else if(strStartsWith(cellId, "blr")){
+      usgOut.zone = "BENGLORE"; 
+   }  */ 
+   
+   string cell = strSubstring(cellId, 0, 3);
+   if(cell == "mum"){
+      usgOut.zone = "MUMBAI"; 
+   }else if(cell == "del"){
+      usgOut.zone = "DELHI"; 
+   }  
+   else if(cell == "blr"){
+      usgOut.zone = "BENGLORE"; 
+   }   
+}
+
+
+    ]]></string>
+</exportmultiplex>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<exportmultiplex category="Ultra_Format" ref_path="ultra_format[Internal]/storable[ultra_format]/storable[Data]">
+   <string name="Definition"><![CDATA[//UFLD to Decode CSV file
+/*
+1,Jai,Mumbai    
+2,Ajay,Pune
+3,Raju,Pune
+*/
+
+external PersonExt{
+    ascii id : terminated_by(","); 
+    ascii name : terminated_by(","); 
+    ascii city : terminated_by("\n");   
+};
+
+internal PersonInt{
+   int Id;  
+   string name;
+   string city;   
+};
+
+in_map per_inMap : external(PersonExt),internal(PersonInt){
+    e:id and i:Id;
+    automatic;
+};
+decoder perDec : in_map(per_inMap);
+
+external PersonExtOut{
+    ascii id : terminated_by("|"); 
+    ascii name : terminated_by("'"); 
+    ascii city : terminated_by("\n");   
+};
+out_map per_oMap : external(PersonExtOut),internal(PersonInt){
+    e:id and i:Id;
+    automatic;
+};
+encoder perEnc : out_map(per_oMap);
+
+/*
+India,MH,Mumbai    
+US,TEST,NY 
+*/
+internal Address{  
+    string Country;
+    string State;
+    string City;
+};
+]]></string>
+</exportmultiplex>

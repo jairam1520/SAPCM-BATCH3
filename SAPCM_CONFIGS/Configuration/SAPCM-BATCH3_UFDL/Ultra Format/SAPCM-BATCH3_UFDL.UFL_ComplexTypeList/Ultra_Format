@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<exportmultiplex category="Ultra_Format" ref_path="ultra_format[Internal]/storable[ultra_format]/storable[Data]">
+   <string name="Definition"><![CDATA[//List decode for ascii data
+/*
+Record structure:
+CUST1001,02Apple|05Mango|01Milk|#UPI
+*/
+
+external ShopCartExt{
+    ascii cust: terminated_by(",");
+    list<CartItem> cartItem : terminated_by("#");
+    ascii paymentMode : terminated_by("\n");
+};
+external CartItem{
+    ascii qty : static_size(2),int(base10);
+    ascii itemName : terminated_by("|");    
+};
+in_map ci_iMap : external(CartItem),target_internal(CartItemTI){automatic;};
+in_map sc_iMap : external(ShopCartExt),target_internal(ShopCartTI){
+  automatic{
+    CartItem : using in_map ci_iMap;   
+  };};
+decoder ShopDec:in_map(sc_iMap);
+
+
+
+//List decode for hexadecimal data
+external MySubUDR { 
+  int  dataLength : static_size(1),external_only; 
+  ascii secretData : dynamic_size(dataLength); 
+}; 
+
+external MyUDR { 
+  int elementCount  : terminated_by(":"),external_only; 
+  list<MySubUDR> myList : element_count(elementCount); 
+  int userType  : terminated_by(0xA); 
+};
+in_map iMapSub : external(MySubUDR),target_internal(MySubUDR_TI){automatic;};
+in_map iMap : external(MyUDR),target_internal(MyUDR_TI){
+  automatic{
+    MySubUDR : using in_map iMapSub;   
+  };
+};
+decoder dec:in_map(iMap);]]></string>
+</exportmultiplex>

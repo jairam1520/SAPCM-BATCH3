@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<exportmultiplex category="Template" ref_path="workflow_data[Internal]/storable[workflow_data]/storable[Data]">
+   <list classname="java.util.ArrayList" name="Comments"/>
+   <storable name="Execution Config" storable-id="dr.WorkflowExecutionConfig" ver="10.0">
+      <enum name="debugType" storable-id="dr.DebugType" value="EVENT"/>
+      <storable name="executionSettings" storable-id="dr.ExecutionSettings" ver="11.0">
+         <boolean name="enabled" value="false"/>
+         <storable name="kafka" null="true"/>
+      </storable>
+      <int name="noOfFilesToKeep" value="0"/>
+      <string name="throughputMIM" null="true"/>
+      <string name="txnHandler" value="Default Handler"/>
+   </storable>
+   <list classname="java.util.ArrayList" name="Field Types"/>
+   <list classname="java.util.ArrayList" name="Logged error MIM"/>
+   <list classname="java.util.ArrayList" name="Nodes">
+      <storable name="0" storable-id="dr.WfNode" ver="2.0">
+         <string name="Classname"><![CDATA[com.digitalroute.http2.server.agent.Http2ServerInsp]]></string>
+         <array classname="com.digitalroute.wf.WfNodeConfig" name="Configuration" size="1">
+            <storable name="0" storable-id="dr.WfNodeConfig" ver="1.0">
+               <string name="Classname"><![CDATA[com.digitalroute.http2.server.agent.Http2ServerInsp]]></string>
+               <storable name="Data" storable-id="dr.HTTP2ServerData" ver="12.1">
+                  <enum classname="com.digitalroute.http2.server.auth.AuthLevel" name="authLevel" value="NONE"/>
+                  <string name="authPublicKey" null="true"/>
+                  <int name="averagePeriod" value="10"/>
+                  <string name="characterEncoding" value="UTF-8"/>
+                  <int name="clientTimeout" value="10"/>
+                  <boolean name="enableTooManyRequests" value="false"/>
+                  <int name="gzipLevel" value="7"/>
+                  <string name="host" value="192.168.2.100"/>
+                  <boolean name="isTwoWayAuth" value="false"/>
+                  <int name="maxConcurrentStreams" value="500"/>
+                  <int name="numberOfRequests" value="1000"/>
+                  <int name="port" value="8085"/>
+                  <boolean name="routeToApl" value="false"/>
+                  <storable name="securityProfile" null="true"/>
+                  <int name="serverTimeout" value="0"/>
+                  <list classname="java.util.ArrayList" name="strategies">
+                     <storable name="0" storable-id="dr.HTTP2.OpenAPI" ver="10.4">
+                        <storable name="configuration" null="true"/>
+                        <string name="contentType429" value="application/problem+json"/>
+                        <string name="contentType503" value="application/problem+json"/>
+                        <list classname="java.util.ArrayList" name="openApiProfileList">
+                           <storable name="0" storable-id="dr.DRConfiguration" ver="2.0">
+                              <set name="Dynamic Parameters" null="true"/>
+                              <string name="Folder" value="SAPCM-BATCH3_SAPCC"/>
+                              <string name="Key" value="DR1783700465623"/>
+                              <string name="Name" value="PRF_OPENAPI_DEX"/>
+                              <string name="Type" value="Open API Profile"/>
+                           </storable>
+                        </list>
+                        <boolean name="overrideError429" value="false"/>
+                        <boolean name="overrideError503" value="false"/>
+                        <int name="statusCode429" value="429"/>
+                        <int name="statusCode503" value="503"/>
+                        <list name="udrFieldsMap429" null="true"/>
+                        <list name="udrFieldsMap503" null="true"/>
+                        <storable name="udrTypeIdentifier429" null="true"/>
+                        <storable name="udrTypeIdentifier503" null="true"/>
+                        <boolean name="useOpenApi" value="true"/>
+                        <boolean name="validate" value="false"/>
+                     </storable>
+                     <storable name="1" storable-id="dr.HTTP2.Support5G" ver="10.4">
+                        <storable name="configuration" null="true"/>
+                        <boolean name="enableFallBack" value="false"/>
+                        <boolean name="enableRegistrationRetry" value="false"/>
+                        <string name="nrfAddress" null="true"/>
+                        <array classname="java.lang.String" name="nrfAddresses" size="0"/>
+                        <int name="numberOfRegistrationRetry" value="0"/>
+                        <list classname="java.util.ArrayList" name="openApiProfileList"/>
+                        <array name="secondaryAddress" null="true"/>
+                        <array classname="java.lang.String" name="secondaryAddressList" size="0"/>
+                        <int name="timeIntervalForRegistrationRetry" value="0"/>
+                        <boolean name="use5g" value="false"/>
+                     </storable>
+                  </list>
+                  <storable name="udrType" null="true"/>
+                  <boolean name="useSSL" value="false"/>
+                  <int name="waitDuration" value="10"/>
+               </storable>
+            </storable>
+         </array>
+         <string name="Name" value="Provision"/>
+      </storable>
+      <storable name="1" storable-id="dr.WfNode" ver="2.0">
+         <string name="Classname" value="com.digitalroute.wfc.analysis.AnalysisRealtimeInsp"/>
+         <array classname="com.digitalroute.wf.WfNodeConfig" name="Configuration" size="1">
+            <storable name="0" storable-id="dr.WfNodeConfig" ver="1.0">
+               <string name="Classname" value="com.digitalroute.wfc.analysis.AnalysisRealtimeInsp"/>
+               <storable name="Data" storable-id="dr.StuffyMapperData" ver="10.0">
+                  <string name="sourceCode"><![CDATA[import ultra.openapi.SAPCM-BATCH3_SAPCC.PRF_OPENAPI_DEX;
+import ultra.http;
+import ultra.sapcc;
+consume {
+    if(instanceOf(input,RequestCycle)){
+        RequestCycle req = (RequestCycle)input;
+        debug("RequestCycle:"+req);
+        ParcelRatingRequest parcel = (ParcelRatingRequest)req.openAPIUDR;
+        if(isValidParcelReq(parcel)){
+            CCCycleUDR ccCycle = createChargeReq(parcel);
+            ccCycle.freeField = req;
+            debug("Request:"+ccCycle);
+            udrRoute(ccCycle,"toCC");
+        }else{
+            Response resp = udrCreate(Response);
+            req.response = resp;
+            APIErrorResponse errResp = udrCreate(APIErrorResponse);
+            errResp.errorCode = "INVALID ATTRIBUTES RECEIVED";
+            errResp.errorMessage = "Request data is invalid";
+            errResp.timestamp = (string)dateCreateNow();
+            resp.statusCode = 400;
+            resp.openAPIUDR = errResp;  
+            udrRoute(req,"httpResp");
+        }
+        
+        
+    }else if(instanceOf(input,CCCycleUDR)){
+        debug("Response:"+input);
+        
+        CCCycleUDR ccResp = (CCCycleUDR)input;
+        ChargeUDR charge = (ChargeUDR)ccResp.request;
+        
+        RequestCycle reqCycle = (RequestCycle)ccResp.freeField;
+        Response resp = udrCreate(Response);
+        reqCycle.response = resp;
+        
+        
+        if(instanceOf(ccResp.answer,ChargingResultUDR)){
+            ChargingResultUDR result = (ChargingResultUDR)ccResp.answer;
+            if(result.notifications != null && listSize(result.notifications) > 0){
+                ParcelRatingResponse parcelResp = udrCreate(ParcelRatingResponse);
+                mapNotifToResp(result,parcelResp); 
+                parcelResp.userIdentifier = charge.userId;
+                parcelResp.trackingId = (string)uuidCreateRandom(); 
+                
+                resp.statusCode = 200;
+                resp.openAPIUDR = parcelResp;  
+                udrRoute(reqCycle,"httpResp"); 
+            }else{
+                APIErrorResponse errResp = udrCreate(APIErrorResponse);
+                errResp.errorCode = "EMPTY_RESPONSE_FROM_SAPCC";
+                errResp.errorMessage = "No response received from SAP CC";
+                errResp.timestamp = (string)dateCreateNow();
+                resp.statusCode = 404;
+                resp.openAPIUDR = errResp;  
+                udrRoute(reqCycle,"httpResp");
+            }
+        }else if(instanceOf(ccResp.answer,CCExceptionUDR)){
+            CCExceptionUDR ccExc = (CCExceptionUDR)ccResp.answer;
+            APIErrorResponse errResp = udrCreate(APIErrorResponse);
+            errResp.errorCode = (string)ccExc.reasonCode;
+            errResp.errorMessage = ccExc.message;
+            errResp.timestamp = (string)dateCreateNow();
+            resp.statusCode = 501;
+            resp.openAPIUDR = errResp;  
+            udrRoute(reqCycle,"httpResp");
+        }
+        
+        
+        
+    }
+}
+CCCycleUDR createChargeReq(ParcelRatingRequest parcel){
+    CCCycleUDR  ccCycle = udrCreate(CCCycleUDR);
+    ChargeUDR charge = udrCreate(ChargeUDR);
+    ccCycle.request = charge;
+    date consDate;
+    strToDate(consDate,parcel.consumptionDate,"yyyy-MM-dd");
+    charge.consumptionDate = consDate;
+    charge.userId = parcel.userIdentifier;
+    if(parcel.zzservType == "Domestic"){
+        charge.chargeableItemName = "ZDEX";
+        charge.serviceId = "DEX"; 
+    }
+    charge.ciPropertyList = listCreate(PropertyUDR);
+    listAdd(charge.ciPropertyList,createPropertyUDR("ZZWEIGHT",parcel.zzweight));
+    listAdd(charge.ciPropertyList,createPropertyUDR("ZZHEIGHT",parcel.zzheight));
+    listAdd(charge.ciPropertyList,createPropertyUDR("ZZLENGTH",parcel.zzlength));
+    listAdd(charge.ciPropertyList,createPropertyUDR("ZZWIDTH",parcel.zzwidth));
+    listAdd(charge.ciPropertyList,createPropertyUDR("ZZZONE",parcel.zzzone));
+    listAdd(charge.ciPropertyList,createPropertyUDR("ZZSERV_TYPE",parcel.zzservType));    
+    
+    ChargeExecutionContextUDR chargeContext = udrCreate(ChargeExecutionContextUDR);
+    chargeContext.outputChargeableItemExported = false;
+    chargeContext.resultNotificationReturned = true;
+    chargeContext.resultChargingContractInfoReturned = true;
+    /*chargeContext.resultAccountInfoReturned = false;
+    chargeContext.resultAccountOperationReturned = false;
+    chargeContext.resultAllReturned = false;
+    chargeContext.resultChargeableItemInfoReturned = false;
+    chargeContext.resultChargedItemReturned = false;
+    chargeContext.resultChargingContractInfoReturned = false;
+    chargeContext.resultChargingProcessInfoReturned = false;
+    chargeContext.resultResponseItemReturned = false;*/
+    charge.chargeExecutionContext = chargeContext;
+    
+    return ccCycle;
+                
+}
+PropertyUDR createPropertyUDR(string name,any value){
+   PropertyUDR udr = udrCreate(PropertyUDR);
+   udr.name = name;
+   udr.value = value;
+   return udr; 
+}
+void mapNotifToResp(ChargingResultUDR result,ParcelRatingResponse parcelResp){
+    for(NotificationUDR notifUdr : result.notifications){
+        for(NotificationArgumentUDR notif:notifUdr.notifArgList) {
+            if(notif.name == "computed.PARCEL_AMOUNT"){
+               strToDouble(parcelResp.parcelTotalAmount, (string)notif.value);
+            }else if(notif.name == "computed.VOLUMETRIC_WEIGHT"){
+               strToDouble(parcelResp.volumetricWeight, (string)notif.value);
+            }
+        }  
+    }
+}
+
+boolean isValidParcelReq(ParcelRatingRequest parcel) {
+    // 1. Check for null object reference
+    if (parcel == null) {
+        return false;
+    }
+    
+    // 2. Validate Default Properties (Presence checks)
+    if (parcel.consumptionDate == null) {
+        return false;
+    }
+    if (parcel.userIdentifier == null || parcel.userIdentifier == "") {
+        return false;
+    }
+    if (parcel.serviceIdentifier == null || parcel.serviceIdentifier == "") {
+        return false;
+    }
+    
+    // 3. Validate User Properties (Physical attributes must be strictly greater than 0)
+    if (parcel.zzweight <= 0) {
+        return false;
+    }
+    if (parcel.zzlength <= 0) {
+        return false;
+    }
+    if (parcel.zzwidth <= 0) {
+        return false;
+    }
+    if (parcel.zzheight <= 0) {
+        return false;
+    }
+    
+    // 4. Validate Routing/Classification Fields (Presence checks)
+    if (parcel.zzzone == null || parcel.zzzone == "") {
+        return false;
+    }
+    if (parcel.zzservType == null || parcel.zzservType  == "") {
+        return false;
+    }
+    
+    // All validation checks passed successfully
+    return true;
+}]]></string>
+                  <array classname="com.digitalroute.devkit.drudr.DRTypeInfo" name="udrTypes" size="2">
+                     <storable name="0" storable-id="dr.DRTypeInfo" ver="1.0">
+                        <string name="TypeName" value="sapcc.CCCycleUDR"/>
+                     </storable>
+                     <storable name="1" storable-id="dr.DRTypeInfo" ver="1.0">
+                        <string name="TypeName" value="http.RequestCycle"/>
+                     </storable>
+                  </array>
+               </storable>
+            </storable>
+         </array>
+         <string name="Name" value="Analysis_1"/>
+      </storable>
+      <storable name="2" storable-id="dr.WfNode" ver="2.0">
+         <string name="Classname"><![CDATA[com.digitalroute.mediationZoneIntegration.agent.online.SAPCCOnlineProcessorInsp]]></string>
+         <array classname="com.digitalroute.wf.WfNodeConfig" name="Configuration" size="1">
+            <storable name="0" storable-id="dr.WfNodeConfig" ver="1.0">
+               <string name="Classname"><![CDATA[com.digitalroute.mediationZoneIntegration.agent.online.SAPCCOnlineProcessorInsp]]></string>
+               <storable classname="com.digitalroute.mediationZoneIntegration.agent.online.VersionSafeSAPCCOnlineProcessorConfig" name="Data" ver="10.0">
+                  <boolean name="apiAuthentication" value="true"/>
+                  <boolean name="convertStr" value="false"/>
+                  <boolean name="enableDebug" value="true"/>
+                  <boolean name="enableGlobalEvent" value="false"/>
+                  <boolean name="enableRARListener" value="false"/>
+                  <boolean name="enableSecuredConnection" value="false"/>
+                  <boolean name="enableSpendingStatusMonitoring" value="false"/>
+                  <boolean name="enableSpotEvent" value="false"/>
+                  <int name="expectedAvgLatency" value="1"/>
+                  <boolean name="flowControlEnabled" value="true"/>
+                  <int name="frequency" value="1000"/>
+                  <string name="host" null="true"/>
+                  <string name="hosts" value="S4CC2023:2000"/>
+                  <password name="keystorePassword" value="DR-4-017BB0B8FB061C1876D43DD75468AA40"/>
+                  <string name="keystorePath" value=""/>
+                  <boolean name="latencyControllerEnable" value="false"/>
+                  <password name="password" value="DR-4-186C9689882121BE8349555738FAD95C"/>
+                  <int name="port" value="0"/>
+                  <int name="queueSize" value="0"/>
+                  <int name="queueSizeToNotify" value="0"/>
+                  <int name="rARListenerId" value="1"/>
+                  <enum classname="com.digitalroute.mediationZoneIntegration.connection.types.ResultType" name="sessionCleanupTransactionSetToReturn" value="noTransaction"/>
+                  <enum classname="com.digitalroute.mediationZoneIntegration.connection.types.ResolutionMode" name="sessionResolution" value="cancel"/>
+                  <long name="sessionTTL" value="300"/>
+                  <int name="spendingStatusMonitoringDefaultListenerId" value="1"/>
+                  <int name="spendingStatusMonitoringListenerId" value="1"/>
+                  <int name="spendingStatusMonitoringSessionDefaultTTL" value="86400"/>
+                  <int name="timeout" value="3000"/>
+                  <enum classname="com.digitalroute.mediationZoneIntegration.connection.types.ResultType" name="transactionSetToReturn" value="noTransaction"/>
+                  <string name="username" value="CC_CM_USER1"/>
+               </storable>
+            </storable>
+         </array>
+         <string name="Name" value="SAP_CC_Online_1"/>
+      </storable>
+   </list>
+   <storable name="Persistent" storable-id="dr.WorkflowPersistentConfig" ver="10.0">
+      <string name="persistentInspector" null="true"/>
+      <storable name="persistentStorageConfig" null="true"/>
+      <string name="persistentTimeoutHandler" null="true"/>
+   </storable>
+   <list classname="java.util.ArrayList" name="Routes">
+      <storable name="0" storable-id="dr.WfRoute" ver="2.0">
+         <string name="Name" value="httpReq"/>
+         <int name="Realtime mode" value="0"/>
+      </storable>
+      <storable name="1" storable-id="dr.WfRoute" ver="2.0">
+         <string name="Name" value="httpResp"/>
+         <int name="Realtime mode" value="0"/>
+      </storable>
+      <storable name="2" storable-id="dr.WfRoute" ver="2.0">
+         <string name="Name" value="toCC"/>
+         <int name="Realtime mode" value="0"/>
+      </storable>
+      <storable name="3" storable-id="dr.WfRoute" ver="2.0">
+         <string name="Name" value="toCM"/>
+         <int name="Realtime mode" value="0"/>
+      </storable>
+   </list>
+   <list classname="java.util.ArrayList" name="Service"/>
+   <boolean name="Template Valid" value="true"/>
+   <storable name="Thread data" storable-id="dr.WorkflowExecutionRealtimeConfig" ver="10.0">
+      <int name="countInterval" value="1"/>
+      <int name="queueSize" value="1000"/>
+      <string name="queueStrategy" null="true"/>
+      <string name="queueWorkerStrategy" null="true"/>
+      <boolean name="standalone" value="false"/>
+      <int name="threads" value="8"/>
+   </storable>
+</exportmultiplex>

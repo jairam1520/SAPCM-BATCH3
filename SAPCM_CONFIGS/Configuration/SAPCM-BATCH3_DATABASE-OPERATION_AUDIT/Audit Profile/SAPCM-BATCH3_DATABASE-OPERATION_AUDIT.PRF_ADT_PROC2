@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<audit_profile category="Internal">
+   <storable name="audit_profile" storable-id="dr.Configuration" ver="10.1">
+      <array classname="java.lang.String" name="Access Groups -read -write -execute" size="3">
+         <string name="0" value="ZSAP_CM_ALL"/>
+         <string name="1" value="ZSAP_CM_ALL"/>
+         <string name="2" value="ZSAP_CM_ALL"/>
+      </array>
+      <storable name="Auxiliary Data" null="true"/>
+      <storable name="Data" storable-id="dr.AuditProfileData" ver="2.2">
+         <storable name="Database" storable-id="dr.DRConfiguration" ver="2.0">
+            <set name="Dynamic Parameters" null="true"/>
+            <string name="Folder" value="SAPCM-BATCH3_COMMON"/>
+            <string name="Key" value="DR1781354802672"/>
+            <string name="Name" value="PRF_DB_SAPHANA"/>
+            <string name="Type" value="Database Profile"/>
+         </storable>
+         <array classname="com.digitalroute.wf.audit.AuditTableData" name="Tables" size="1">
+            <storable name="0" storable-id="dr.AuditTableData" ver="1.0">
+               <array classname="com.digitalroute.wf.audit.AuditColumnData" name="Columns" size="6">
+                  <storable name="0" storable-id="dr.AuditColumnData" ver="1.0">
+                     <string name="Column name" value="COUNT"/>
+                     <int name="Column type" value="3"/>
+                     <int name="Data type" value="-5"/>
+                     <int name="Key index" value="0"/>
+                  </storable>
+                  <storable name="1" storable-id="dr.AuditColumnData" ver="1.0">
+                     <string name="Column name" value="CREATED_AT"/>
+                     <int name="Column type" value="1"/>
+                     <int name="Data type" value="93"/>
+                     <int name="Key index" value="0"/>
+                  </storable>
+                  <storable name="2" storable-id="dr.AuditColumnData" ver="1.0">
+                     <string name="Column name" value="FILENAME_NAME"/>
+                     <int name="Column type" value="4"/>
+                     <int name="Data type" value="12"/>
+                     <int name="Key index" value="0"/>
+                  </storable>
+                  <storable name="3" storable-id="dr.AuditColumnData" ver="1.0">
+                     <string name="Column name" value="RECORD_CATEGORY"/>
+                     <int name="Column type" value="2"/>
+                     <int name="Data type" value="12"/>
+                     <int name="Key index" value="1"/>
+                  </storable>
+                  <storable name="4" storable-id="dr.AuditColumnData" ver="1.0">
+                     <string name="Column name" value="TXN_ID"/>
+                     <int name="Column type" value="5"/>
+                     <int name="Data type" value="-5"/>
+                     <int name="Key index" value="0"/>
+                  </storable>
+                  <storable name="5" storable-id="dr.AuditColumnData" ver="1.0">
+                     <string name="Column name" value="WF_NAME"/>
+                     <int name="Column type" value="4"/>
+                     <int name="Data type" value="12"/>
+                     <int name="Key index" value="0"/>
+                  </storable>
+               </array>
+               <string name="Table name" value="SAPCMUSER14.TB_ADT_PROC2"/>
+            </storable>
+         </array>
+         <boolean name="useSchemaFromDB" value="false"/>
+      </storable>
+      <set name="Dynamic Parameters" null="true"/>
+      <string name="Folder" value="SAPCM-BATCH3_DATABASE-OPERATION_AUDIT"/>
+      <boolean name="Is Dirty" value="false"/>
+      <boolean name="Is Dry Run" value="false"/>
+      <boolean name="Is Encrypted" value="false"/>
+      <boolean name="Is Locked" value="false"/>
+      <boolean name="Is Valid" value="false"/>
+      <string name="Key" value="DR1781447129206"/>
+      <string name="Modified By" value="sapcmuser14"/>
+      <long name="Modified Date" value="1781447129206"/>
+      <string name="Name" value="PRF_ADT_PROC2"/>
+      <string name="Owner" value="sapcmuser14"/>
+      <string name="Type" value="Audit Profile"/>
+      <int name="Version" value="1"/>
+      <string name="documentation" value=""/>
+   </storable>
+</audit_profile>

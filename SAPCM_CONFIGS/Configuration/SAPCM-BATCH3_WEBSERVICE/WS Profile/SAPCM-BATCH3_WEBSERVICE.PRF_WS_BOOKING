@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<webservices_profile category="Internal">
+   <storable name="webservices_profile" storable-id="dr.Configuration" ver="10.1">
+      <array classname="java.lang.String" name="Access Groups -read -write -execute" size="3">
+         <string name="0" value="ZSAP_CM_ALL"/>
+         <string name="1" value="ZSAP_CM_ALL"/>
+         <string name="2" value="ZSAP_CM_ALL"/>
+      </array>
+      <storable name="Auxiliary Data" null="true"/>
+      <storable name="Data" storable-id="dr.WSProfileConfig" ver="311.0">
+         <boolean name="2-way Authentication" value="false"/>
+         <string name="Binding name" value="CustomerBookingBinding"/>
+         <boolean name="Desktop Validation" value="false"/>
+         <boolean name="Disable Underscore Binding Mode" value="false"/>
+         <boolean name="Disable Wrapper Style" value="false"/>
+         <boolean name="Enable Big Decimal" value="false"/>
+         <boolean name="Enable JAAS" value="false"/>
+         <boolean name="Enable Username Token" value="false"/>
+         <boolean name="Enable WS Addressing" value="false"/>
+         <boolean name="Enforce RM" value="false"/>
+         <string name="JAAS Module" value=""/>
+         <string name="JAAS Properties" value=""/>
+         <string name="Max Enum Members" value="256"/>
+         <boolean name="Populate OriginalData Field" value="false"/>
+         <string name="Port type" value="CustomerBookingPortType"/>
+         <boolean name="Process Implicit SOAP Headers" value="false"/>
+         <string name="RM Store" value=""/>
+         <string name="Schema Bindings" value=""/>
+         <boolean name="Schema Validation" value="true"/>
+         <boolean name="Security Enabled" value="false"/>
+         <storable name="Security Profile TLS" storable-id="dr.DRConfiguration" ver="2.0">
+            <set name="Dynamic Parameters" null="true"/>
+            <string name="Folder" value="SAPCM-BATCH3_COMMON"/>
+            <string name="Key" value="DR1782632231704"/>
+            <string name="Name" value="PRF_SECURITY"/>
+            <string name="Type" value="Security Profile"/>
+         </storable>
+         <storable name="Security Settings" null="true"/>
+         <string name="Service Port name" value="CustomerBookingPort"/>
+         <boolean name="Simple Mode Enabled" value="false"/>
+         <string name="TLS keystore file" value=""/>
+         <bytearray name="TLS keystore file content"><![CDATA[`
+]]></bytearray>
+         <password name="TLS keystore password" value="DR-4-017BB0B8FB061C1876D43DD75468AA40"/>
+         <password name="Username Token Password" null="true"/>
+         <string name="Username Token Username" null="true"/>
+         <list classname="java.util.LinkedList" name="concatenationFilePathList"/>
+         <string name="helper_class" value=""/>
+         <list classname="java.util.LinkedList" name="includeFiles"/>
+         <string name="inputAndOutputTypeName" value=""/>
+         <string name="properties"><![CDATA[# Advanced XML binding options can be customized here. If the properties are commented out, default values are used.
+
+#Enable JAXB Simple Binding Mode
+# When true, XSD Schemas of loaded WSDL files are compiled into Java code using the experimental "Simple and better binding mode". This is necessary for some complex types, for instance when duplicate element names are used within the same complex type.
+enable_JAXB_simple_binding false
+
+#Disable JAXWS Wrapper style Mode
+# When true, the cycle UDR will contain request and response parameters that wrap all the arguments in request and response UDRs.
+disable_JAXWS_wrapper_mode false
+
+#Enable Processing Of Implicit Soap Header
+# When true, any SOAP headers defined in the binding section of WSDL files are compiled into Java code. This is necessary in order to manipulate the SOAP headers in outgoing Web Service requests. 
+enable_processing_of_implicit_SOAP_header false
+
+#Disable Underscore Binding Mode
+# When false, underscore binding mode is true, JAXB will not strip underscore from the element names when converting a WSDL file to Java.
+disable_under_score_binding false
+
+#Populate originaldata field
+# When true the OriginalData field in the WSCycleUDR will be populated with the content of the SOAP request
+populate_originaldata_field false
+
+#Max enum members
+# Sets the value for the typesafeEnumMaxMembers jaxb global variable which controls the maximum number of allowed enum members
+max_enum_members 256
+
+#Schema level bindings
+# Sets the jaxb schema level bindings per xsd file. The format is [filename.xsd]:package=[packageSuffix],[transformationType]-prefix=prefix,suffix=suffix;
+schema_level_bindings 
+
+#Global bindings
+# Sets the jaxb global bindings per xsd file. The format is property=value;
+global_bindings localScoping=nested
+
+#Enable fault stack trace in response
+# When true stack trace information will be available in error responses
+fault_stack_trace_enabled false
+
+#Allow HEAD
+# When true HTTP method HEAD is allowed
+allow_head false
+
+#Jetty Accept Queue Size
+# Size of the Jetty ServerConnector request queue, set to 0 to disable queue
+jetty_accept_queue_size 0
+
+#Enable Big Decimal
+# Enable the use of BigDecimal as internal type for decimal
+enable_big_decimal false
+
+]]></string>
+         <boolean name="singleWSDLFile" value="true"/>
+         <string name="transport" value="HTTPS"/>
+         <map classname="java.util.HashMap" name="typeNamespaceToPrefixMap" size="1">
+            <string name="key_0" value="http://sapcmwebservice.com"/>
+            <string name="value_0" value="tns"/>
+         </map>
+         <string name="unique_name" value="com.digitalroute.ws.ws1782629639541"/>
+         <string name="wsdlFileContent" quoted="true"><![CDATA[<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"\u000d
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"\u000d
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"\u000d
+    xmlns:tns="http://sapcmwebservice.com"\u000d
+    targetNamespace="http://sapcmwebservice.com"\u000d
+    name="CustomerBookingService">\u000d
+\u000d
+\u000d
+    <wsdl:types>\u000d
+        <xsd:schema elementFormDefault="qualified" targetNamespace="http://sapcmwebservice.com">\u000d
+            <xsd:element name="CustomerBookingRequest">\u000d
+                <xsd:complexType>\u000d
+                    <xsd:sequence>\u000d
+                        <xsd:element name="FirstName" type="xsd:string"/>\u000d
+                        <xsd:element name="LastName" type="xsd:string"/>\u000d
+                        <xsd:element name="Number" type="xsd:string"/>\u000d
+						<xsd:element name="EmailId" type="xsd:string"/>\u000d
+                        <xsd:element name="BookingAmount" type="xsd:double"/>\u000d
+                    </xsd:sequence>\u000d
+                </xsd:complexType>\u000d
+            </xsd:element>\u000d
+			        \u000d
+		<xsd:element name="CustomerBookingResponse">\u000d
+                <xsd:complexType>\u000d
+                    <xsd:sequence>\u000d
+                        <xsd:element name="errorcode" type="xsd:string"/>\u000d
+                        <xsd:element name="errormessage" type="xsd:string"/>\u000d
+                        <xsd:element name="errorstatus" type="xsd:string"/>\u000d
+                    </xsd:sequence>\u000d
+                </xsd:complexType>\u000d
+            </xsd:element>\u000d
+			</xsd:schema>\u000d
+    </wsdl:types>\u000d
+\u000d
+    <wsdl:message name="CustomerBookingRequestMessage">\u000d
+        <wsdl:part name="parameters" element="tns:CustomerBookingRequest"/>\u000d
+    </wsdl:message>\u000d
+\u000d
+    <wsdl:message name="CustomerBookingResponseMessage">\u000d
+        <wsdl:part name="parameters" element="tns:CustomerBookingResponse"/>\u000d
+    </wsdl:message>\u000d
+\u000d
+    <wsdl:portType name="CustomerBookingPortType">\u000d
+        <wsdl:operation name="BookingCustomer">\u000d
+            <wsdl:input message="tns:CustomerBookingRequestMessage"/>\u000d
+            <wsdl:output message="tns:CustomerBookingResponseMessage"/>\u000d
+        </wsdl:operation>\u000d
+    </wsdl:portType>\u000d
+\u000d
+    <wsdl:binding name="CustomerBookingBinding" type="tns:CustomerBookingPortType">\u000d
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>\u000d
+        <wsdl:operation name="BookingCustomer">\u000d
+            <soap:operation soapAction="http://sapcmwebservice.com/BookingCustomer"/>\u000d
+            <wsdl:input>\u000d
+                <soap:body use="literal"/>\u000d
+            </wsdl:input>\u000d
+            <wsdl:output>\u000d
+                <soap:body use="literal"/>\u000d
+            </wsdl:output>\u000d
+        </wsdl:operation>\u000d
+    </wsdl:binding>\u000d
+\u000d
+    <wsdl:service name="CustomerBookingService">\u000d
+        <wsdl:port name="CustomerBookingPort" binding="tns:CustomerBookingBinding">\u000d
+            <soap:address location="http://192.168.2.100:8085/"/>\u000d
+        </wsdl:port>\u000d
+    </wsdl:service>\u000d
+\u000d
+</wsdl:definitions>]]></string>
+         <string name="wsdlFileName" value="Booking.wsdl"/>
+         <string name="wsdl_file" value=""/>
+      </storable>
+      <set name="Dynamic Parameters" null="true"/>
+      <string name="Folder" value="SAPCM-BATCH3_WEBSERVICE"/>
+      <boolean name="Is Dirty" value="false"/>
+      <boolean name="Is Dry Run" value="false"/>
+      <boolean name="Is Encrypted" value="false"/>
+      <boolean name="Is Locked" value="false"/>
+      <boolean name="Is Valid" value="false"/>
+      <string name="Key" value="DR1782633409622"/>
+      <string name="Modified By" value="sapcmuser14"/>
+      <long name="Modified Date" value="1782633409622"/>
+      <string name="Name" value="PRF_WS_BOOKING"/>
+      <string name="Owner" value="sapcmuser14"/>
+      <string name="Type" value="WS Profile"/>
+      <int name="Version" value="1"/>
+      <string name="documentation" value=""/>
+   </storable>
+</webservices_profile>
